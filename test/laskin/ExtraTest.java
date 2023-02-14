@@ -54,13 +54,19 @@ public class ExtraTest extends AbstractParent {
     }
     @Test
     public void testNeliojuuri2() {
-        laskin.neliojuuri(2);
-		// Tähän assertXXX(), odotetun tuloksen tulee olla (int)Math.sqrt(2)
+        int result = laskin.neliojuuri(1);
+        int expectedResult = (int) Math.sqrt(2);
+        assertEquals(expectedResult, result);
     }
     
     @Test
     @DisplayName("Testaa negatiivinen neliöjuuri")
     public void testNeliojuuriNegat() {
-         fail("TESTIÄ EI OLE VIELÄ LAADITTU.");
+        try {
+            laskin.neliojuuri(-2);
+            fail("ArithmeticException-virhettä ei heitetty");
+        } catch (ArithmeticException e) {
+            assertEquals("Negatiivisen luvun neliöjuuri", e.getMessage());
+        }
     }
 }

@@ -1,16 +1,14 @@
 package laskin;
-
+import org.junit.function.ThrowingRunnable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
-/*
- * JUnit 5
- */
+
 
 public class LaskinTest { // Luokan nimen loppu pitää olla Test
 
@@ -29,7 +27,7 @@ public class LaskinTest { // Luokan nimen loppu pitää olla Test
     public void testLisaa() {
         laskin.lisaa(1);
         laskin.lisaa(2);
-        assertEquals(4, laskin.annaTulos(), "Lukujen 1 ja 2 summa väärin");
+        assertEquals(3, laskin.annaTulos(), "Lukujen 1 ja 2 summa väärin");
     }
 
     @Test
@@ -44,7 +42,7 @@ public class LaskinTest { // Luokan nimen loppu pitää olla Test
     public void testJaa() {
         laskin.lisaa(8);
         laskin.jaa(2);
-        assertEquals(5, laskin.annaTulos(), "Jakolasku 8/2 väärin");
+        assertEquals(4, laskin.annaTulos(), "Jakolasku 8/2 väärin");
     }
 
     // Testin oikea tulos on, että nollallajako heittää poikkeuksen,
@@ -52,13 +50,22 @@ public class LaskinTest { // Luokan nimen loppu pitää olla Test
     @Test
     @DisplayName("Testaa nollallajako")
     public void testJaaNollalla() {
-        ArithmeticException poikkeus = assertThrows(ArithmeticException.class, () -> laskin.jaa(0));
+        ArithmeticException poikkeus = assertThrows(ArithmeticException.class, (ThrowingRunnable) () -> laskin.jaa(0));
         assertEquals("Nollalla ei voi jakaa", poikkeus.getMessage());
     }
- 
+
     @Test
-    @Disabled("HUOMAA - Metodi kerro() on vielä toteuttamatta, eikä sitä haluta ajaa vielä")
+    @DisplayName("Testa kertolasku")
     public void testKerro() {
-       fail("TESTIÄ EI OLE VIELÄ TOTEUTETTU");
+        laskin.lisaa(3);
+        laskin.kerro(4);
+        assertEquals(12, laskin.annaTulos(), "Lukujen 3 ja 4 tulo väärin");
+    }
+
+    @Test
+    @DisplayName("Testaa negatiivinen neliöjuuri")
+    public void testNeliojuuriNegat() {
+        ArithmeticException poikkeus = assertThrows(ArithmeticException.class, (ThrowingRunnable) () -> laskin.neliojuuri(-2));
+        assertEquals("Negatiivisen luvun neliöjuuri", poikkeus.getMessage());
     }
 }

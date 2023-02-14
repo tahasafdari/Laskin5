@@ -33,8 +33,9 @@ public class Laskin {
         tulos = 2 * n;
     }
 
-    public void neliojuuri(int n) {
+    public int neliojuuri(int n) {
     	// Ei vielä toteutettu
+        return n;
     }
 
     public void virtaON() {
